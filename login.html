@@ -1,0 +1,57 @@
+﻿<!--reference -- https://startbootstrap.com/snippets/login/-->
+<!--<div class="container">
+    <div class="row my-auto ">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto ">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h3 class="card-title text-center" style="font-weight:bold">RFMS</h3>
+                    <h5 class="card-title  text-center">Sign In</h5>
+                    <form class="form-signin">
+                        <div class="form-label-group">
+                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                            <label for="inputEmail">Email address</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <label for="inputPassword">Password</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Remember password</label>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" ng-click="home.isAuthenticated=true; login.Login();">Sign in</button>
+                        <hr class="my-4">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img class="img-fluid login-logo" src="res/rfms-logo.png" id="icon" alt="" />
+    </div>
+    <!-- Login Form -->
+    <form>
+      <input type="email" id="login-email" class="fadeIn second" name="login" placeholder="email">
+      <input type="password" id="login-password" class="fadeIn third" name="login" placeholder="password">
+      <a class="btn standard-btn mb-2 cursor" ng-click="home.isAuthenticated=true; login.Login();">
+        <span ng-hide="login.isAuthenticatingUser">Log In</span>
+        <div ng-show="login.isAuthenticatingUser" class="spinner-grow" style="width: 1rem; height: 1rem; color: #a9a0a7" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </a>
+    </form>
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+
+    </div>
+  </div>
+</div>
+

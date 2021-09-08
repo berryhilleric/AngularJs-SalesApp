@@ -1,0 +1,144 @@
+﻿<div class="col">
+    <div class="text-center">
+        <div ng-show="user.IsAdmin" class="my-1 mx-auto btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active" ng-click="assignment.ChangePath('assignment')">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>Assignment
+            </label>
+            <label class="btn btn-secondary" ng-click="assignment.ChangePath('territories')">
+                <input type="radio" name="options" id="option2" autocomplete="off">Territories
+            </label>
+            <!--<label class="btn btn-secondary">
+<input type="radio" name="options" id="option3" autocomplete="off">States/Provinces
+</label>-->
+        </div>
+        <!--<button type="button" class="btn btn-primary">New Territory</button>-->
+    </div>
+    <div class="container ">
+
+        <div id="dual-list-box" class="row justify-content-center">
+
+            <div class="col-md-5">
+                <div class="row">
+
+                    <div class="col-2 btn-group">
+                        <button id="duallist-dummy-btn" type="button" class="btn dropdown-toggle my-2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+
+                        </button>
+
+                    </div>
+                </div>
+                <h4><span class="unselected-title">Unassigned States/Provinces</span>
+                    <!--<small>- showing <span class="unselected-count">100</span></small>-->
+                </h4>
+                <!--<input class="filter form-control filter-unselected" type="text" placeholder="Filter" style="margin-bottom: 5px;">-->
+                <select id="unassigned-select" class="unselected form-control" style="height: 200px; width: 100%;"
+                    multiple="">
+                    <option value="32" ng-repeat="state in assignment.unassignedStates">{{state}}</option>
+                </select>
+            </div>
+            <div ng-show="user.IsAdmin" class="col-md-2 center-block" style="margin-top: 80px">
+                <div class="container">
+                    <div class="row justify-content-center">
+
+                        <button type="button" class="duallist-btn col-6 my-1"
+                            ng-click="assignment.MoveAllToTerritory(assignment.currentTerritory)">
+                            <i class="fas fa-angle-double-right"></i>
+                        </button>
+
+                    </div>
+                    <div class="row justify-content-center">
+
+                        <button type="button" class="duallist-btn col-6 my-1"
+                            ng-click="assignment.MoveSelectedToTerritory(assignment.currentTerritory)">
+                            <i class="fas fa-angle-right"></i>
+                        </button>
+
+                    </div>
+                    <div class="row justify-content-center">
+
+                        <button type="button" class="duallist-btn col-6 my-1"
+                            ng-click="assignment.MoveSelectedToUnassigned(assignment.currentTerritory)">
+                            <i class="fas fa-angle-left"></i>
+                        </button>
+
+                    </div>
+                    <div class="row justify-content-center">
+
+                        <button type="button" class="duallist-btn col-6 my-1"
+                            ng-click="assignment.MoveAllToUnassigned(assignment.currentTerritory)">
+                            <i class="fas fa-angle-double-left"></i>
+                        </button>
+
+                    </div>
+                    <div class="row justify-content-center">
+
+                        <button type="button" id="duallist-save" class="duallist-btn col-xs-6 my-1"
+                            ng-click="assignment.SaveUpdates()">
+                            Save
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-2 btn-group">
+                            <button id="territory-dropdown-btn" type="button" class="btn dropdown-toggle my-2"
+                                style="background-color:{{assignment.currentTerritoryColor}};" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                {{assignment.currentTerritoryName}}
+                            </button>
+                            <div id="" class="dropdown-menu">
+                                <!--zero-based indexing for months-->
+                                <a class="dropdown-item my-dropdown cursor"
+                                    style="background-color:{{territory.color}};border-color:grey;color:white"
+                                    ng-repeat="territory in assignment.territories"
+                                    ng-click="assignment.currentTerritory = $index; assignment.currentTerritoryName = territory.name; assignment.currentTerritoryColor = territory.color;">{{territory.name}}</a>
+
+                                <!--<a class="dropdown-item" ng-click="">December</a>-->
+                                <!--<div class="dropdown-divider"></div>-->
+                                <!--<a class="dropdown-item" href="#">Separated link</a>-->
+                            </div>
+                        </div>
+                    </div>
+                    <h4><span class="selected-title">Assigned States/Provinces</span>
+                        <!--<small>- showing <span class="selected-count">0</span></small>-->
+                    </h4>
+                    <!--<input class="filter form-control filter-selected" type="text" placeholder="Filter" style="margin-bottom: 5px;">-->
+                    <select id="assigned-select" class="selected form-control" style="height: 200px; width: 100%;"
+                        multiple="" name="">
+                        <option value="32"
+                            ng-repeat="state in assignment.territories[assignment.currentTerritory].salesStates">
+                            {{state}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- reference https://jsmaps.io/ or (more directly) https://jsmaps.io/america/javascript-map-usa-canada/ for more information on this markup -->
+    <div class="container my-2">
+
+        <!-- Map html - add the below to your page -->
+        <div class="jsmaps-wrapper" id="usaCanada-map"></div>
+        <!-- End Map html -->
+    </div>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('#usaCanada-map').JSMaps({
+                map: 'usaCanada',
+                displayAbbreviationOnDisabledStates: false,
+                displayAbbreviations: true
+            });
+
+        });
+
+    </script>
+</div>

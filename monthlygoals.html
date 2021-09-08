@@ -1,0 +1,203 @@
+<!-- the injected html; the container where this is injected in index.html is a row: the nested child 'containers' stack vertically-->
+<div class="col">
+  <!-- sub nav bar; monthly, yearly, report buttons -->
+  <div class="container-fluid row justify-content-center my-2 mx-0 p-0">
+    <div class="col-12 col-sm-3 btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="my-auto px-1 btn btn-secondary cursor active"
+        ng-click="monthlygoals.GetProgressForOneMonthForEveryTerritory(monthlygoals.currentMonth).then(monthlygoals.UpdateChartData)">
+        <input type="radio" name="options" id="option1" autocomplete="off" checked> Monthly
+      </label>
+      <label class="my-auto px-1 btn btn-secondary cursor"
+        ng-click="monthlygoals.GetProgressForOneTerritoryForEveryMonth(0).then(monthlygoals.UpdateChartData)">
+        <input type="radio" name="options" id="option2" autocomplete="off"> Yearly
+      </label>
+    </div>
+    <div ng-show="user.IsAdmin" class="col-6 col-sm-1 mt-1 mt-sm-0 p-0 btn-group">
+      <button type="button" ng-click="monthlygoals.GetReportByStoreCode()" class="btn btn-primary p-0">Report</button>
+    </div>
+  </div>
+  <!-- Goals and Chart -->
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <!--Column 1 (left) -- territory goal input and update buttons -->
+      <div class="col-8 col-md-4" ng-show="user.IsAdmin">
+        <!-- One set of labels,inputs, update buttons -- this is ng-repeated -->
+        <div class="container" ng-show="monthlygoals.chartType == 'month'"
+          ng-repeat="territory in monthlygoals.territorySalesNumbers track by $index">
+          <div class="row align-items-end mb-3 mb-sm-2">
+            <label class="col-1 m-0 p-0 text-center" for="goal-{{territory.name}}"
+              style="display: inline-block;">$</label>
+            <!--Reason for label behind outside; when an input is inside a label element the label appears on top, when its outside it appears on the left-->
+            <div class="col-11 col-lg-7 m-0 p-0">
+              <label class="m-0 w-100">{{territory.name}}
+                <input class="pl-1 pr-0 form-control form-control-sm" name="goal-{{territory.name}}"
+                  id="month-goals-input{{$index}}" type="text" placeholder="" step="1000" min="0" max="2147483647"
+                  ng-model="territory.goaldisplaystring" ng-change="monthlygoals.FormatNumbers($index)">
+              </label>
+            </div>
+            <a class="col-11 col-sm-4 col-lg-3 col-xl-2 ml-auto ml-lg-2 mt-1 btn-sm btn standard-btn h-50 cursor"
+              style="margin-left: 32px;"
+              ng-click="monthlygoals.UpdateMonthlyGoal($index, monthlygoals.currentMonth + 1).then(monthlygoals.UpdateChartData)">update</a>
+          </div>
+        </div>
+        <div class="container" ng-show="monthlygoals.chartType == 'year'"
+          ng-repeat="territory in monthlygoals.territorySalesNumbers track by $index">
+          <div  class="row align-items-end mb-3 mb-sm-2">
+            <!-- <span class="col-12">&nbsp;&nbsp;{{monthlygoals.months[$index]}}</span> -->
+            <label class="col-1 m-0 p-0 text-center" for="goal-{{territory.name}}"
+              style="display: inline-block;">$</label>
+            <div class="col-11 col-lg-7 m-0 p-0">
+
+              <label class="m-0 w-100">{{monthlygoals.months[$index]}}
+                <input id="year-goals-input{{$index}}" type="text" name="goal-{{territory.name}}"
+                  class="pl-1 pr-0 form-control form-control-sm" placeholder="" step="1000" min="0"
+                  max="2147483647" ng-model="territory.goaldisplaystring"
+                  ng-change="monthlygoals.FormatNumbers($index)">
+                </label>
+
+            </div>
+            <a ng-disable="monthlygoals.currentYear < monthlyGoals.thisYear || monthlyGoals.thisMonth < 0"
+              class="col-11 col-sm-4 col-lg-3 col-xl-2 ml-auto ml-lg-2 mt-1 btn-sm btn standard-btn h-50 cursor"
+              style="margin-left: 32px;"
+              ng-click="monthlygoals.UpdateMonthlyGoal($index, $index + 1).then(monthlygoals.UpdateChartData)">update</a>
+          </div>
+        </div>
+      </div>
+      <!-- Column 2 (right) -- Chart container -->
+      <div class="col-12 col-md-8 my-md-3">
+        <!-- Card containing the buttons for month, year, update buttons-->
+        <div class="container card">
+          <!-- chart month, year, update buttons -->
+          <div class="row ml-1">
+            <a class="btn standard-btn dropdown-toggle my-2 col-6 col-md-3 col-lg-2 col-xl-2 cursor"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{monthlygoals.dropdownDisplayString}}
+            </a>
+            <input class="form-control my-2 mx-md-2 col-6 col-md-3 col-lg-2" type="number" name="quantity" min="2010"
+              max={{monthlygoals.maxYear}} value={{monthlygoals.currentYear}} ng-model="monthlygoals.currentYear">
+            <a class="btn standard-btn my-2 col-6 col-md-3 col-lg-2 col-xl-2 cursor"
+              ng-click="monthlygoals.UpdateChart()">
+              Update
+            </a>
+            <div id="" class="dropdown-menu">
+              <!-- zero-based indexing for months -->
+              <a ng-show="monthlygoals.chartType == 'month'" class="dropdown-item cursor"
+                ng-repeat="month in monthlygoals.months"
+                ng-click="monthlygoals.GetProgressForOneMonthForEveryTerritory($index).then(monthlygoals.UpdateChartData)">{{month}}</a>
+              <a ng-show="monthlygoals.chartType == 'year'" class="dropdown-item cursor"
+                ng-repeat="territory in monthlygoals.territories"
+                ng-click="monthlygoals.GetProgressForOneTerritoryForEveryMonth($index).then(monthlygoals.UpdateChartData)">{{territory.name}}</a>
+              <div class="dropdown-divider"></div>
+              <!--<a class="dropdown-item" href="#">Separated link</a>-->
+            </div>
+
+
+          </div>
+          <div ng-show="monthlygoals.chartType == 'year'" class="row justify-content-center">
+            <p class="col-11 col-md-8 col-lg-6 px-0 card bold-large-text text-center">{{monthlygoals.statesstring}}</p>
+          </div>
+          <!-- Chart -->
+          <div class="row justify-content-center h-100">
+            <div class="chart-container col-12 ">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+          <div class="container-fluid row justify-content-center mx-0 my-4">
+            <!-- Totals for Goals, Written, Yearly, Over/Under -->
+            <div class="col-12 card p-0">
+              <div class="card-header text-center bold-large-text">Totals</div>
+              <div class="card-body table-responsive-md   p-0">
+                <div class="container row mx-0 p-0">
+                  <div class="col-12 col-md-4 col-lg-3 p-0 card">
+                    <div class="p-0 card-header text-white text-center bold-medium-text"
+                      style="background-color:rgba(255, 206, 86, 1)">Goals
+                    </div>
+                    <div class="card-body px-0">
+
+                      <p class="card-text text-center bold-medium-text">${{monthlygoals.goalsTotal | number:2}}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-4 col-lg-3 p-0 card">
+                    <div class="p-0 card-header text-white text-center bold-medium-text"
+                      style="background-color:rgba(255, 99, 132, 1)">Written
+                    </div>
+                    <div class="card-body px-0">
+
+                      <p class="card-text text-center bold-medium-text">${{monthlygoals.writtenTotal | number:2}}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-4 col-lg-3 p-0 card">
+                    <div class="p-0 card-header text-white text-center bold-medium-text"
+                      style="background-color:rgba(54, 162, 235, 1)">Delivered
+                    </div>
+                    <div class="card-body px-0">
+
+                      <p class="card-text text-center bold-medium-text">${{monthlygoals.deliveredTotal | number:2}}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-3 p-0 card">
+                    <div class="p-0 card-header bg-secondary text-white text-center bold-medium-text">Under/Over
+                    </div>
+                    <div class="card-body px-0">
+                      <p class="card-text text-center bold-medium-text" style="color:green;"
+                        ng-class="{'red-text' : monthlygoals.goalsWrittenDifference < 0, 'green-text' : monthlygoals.goalsWrittenDifference > 0, }">
+                        ${{monthlygoals.goalsWrittenDifference | number:2}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-8">
+        <!-- the container for all the sales progress cards -->
+        <div class="card">
+          <div class="card-header text-center bold-large-text">Progress</div>
+          <div class="card-body">
+            <!-- Territory or Month goal percentage (depends on whether view is monthly or yearly) -->
+            <div class="d-flex flex-wrap justify-content-center">
+              <div class="container">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-sm-8 col-md-4 col-lg-3 p-0 m-1 card"
+                    ng-repeat="percent in monthlygoals.goalPercentages track by $index">
+                    <div class="card-header bg-secondary text-white text-center bold-medium-text">{{percent.label}}
+                    </div>
+                    <div class="card-body">
+                      <p ng-hide="monthlygoals.chartType == 'year'" class="card-text text-center bold-medium-text">
+                        Position:
+                        {{$index + 1}}</p>
+                      <p class="card-text text-center bold-medium-text">Progress:
+                        {{percent.value}}</p>
+                      <p class="card-text text-center bold-medium-text" ng-show="monthlygoals.windowWidth < 1024">
+                        Written: {{percent.written | number:2}}</p>
+                      <p class="card-text text-center bold-medium-text" ng-show="monthlygoals.windowWidth < 1024">
+                        Delivered: {{percent.delivered | number:2}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="middle-spinner" ng-show="monthlygoals.isLoadingData">
+    <div class="spinner-grow" style="width: 3rem; height: 3rem; color: #b5121b" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>

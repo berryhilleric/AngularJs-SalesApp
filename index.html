@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SalesGoals">
+    <head>
+        <title>Sales Goals</title>
+        <base href="https://localhost/Sales/">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="shortcut icon" href="https://localhost/Sales/res/rfms-logo.png" />
+        <link rel="icon" href="https://localhost/Sales/res/rfms-logo.png">
+        <link href="jsmaps/jsmaps.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="style/style.css">
+        <link rel="stylesheet" type="text/css" href="style/login.css">        
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">       
+        <!-- bootstrap 4 required style cdn -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    </head>
+    <body >
+        <script>console.log("start of index.html body");</script>
+        <!-- ng-view nested in body to prevent recalling the script elements below -->
+        <div class="container-fluid" ng-controller="HomeCtrl as home">
+            <!-- Insert Header html -->
+            <div class="row" ng-show="isAuthenticated">
+                <nav class="col navbar navbar-expand-md bg-dark navbar-dark">
+                    <a class="navbar-brand bold-larger-text" href="#">RFMS</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                        <ul class="navbar-nav mx-auto my-auto justify-content-center">
+                            <li class="nav-item mx-3">
+                                <a class="nav-link bold-large-text" href="monthlygoals">Goals</a>
+                            </li>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link bold-large-text" href="assignment">Territories</a>
+                            </li>
+                            
+                        </ul>
+                        <!--<button class="" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <ul class="navbar-nav justify-content-end">
+                            <li class="nav-item"><a class="nav-link" >Log Out</a></li>
+                        </ul>-->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary bg-dark" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">      
+                                <button ng-show="user.IsAdmin" class="dropdown-item" type="button" ng-click="home.ChangePassword()">Change Password</button>
+                                <button class="dropdown-item" type="button" ng-click="home.LogOut()">Logout</button>
+                            </div>
+                        </div>
+                       
+                        
+                    </div>                    
+                </nav>
+            </div>
+            <div class="row" ng-view>
+                <!-- template code will be placed here according to route -->
+            </div> 
+            <!-- Insert footer html -->
+        </div>
+
+        <!-- bootstrap 4 required js cdn's -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+        
+
+        <!-- jquery / angularjs cdn's -->
+        <script src="https://code.jquery.com/jquery-3.2.1.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-route.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>    
+
+        <script src="jsmaps/jsmaps-libs.js" type="text/javascript"></script>
+        <script src="jsmaps/jsmaps-panzoom.js"></script>
+        <script src="jsmaps/jsmaps.min.js" type="text/javascript"></script>
+        <script src="jsmaps/jsmaps.js" type="text/javascript"></script>
+        <!--<script src="maps/usaCanada.js" type="text/javascript"></script>-->
+
+        <script src="js/app.js"></script>
+        
+        <script src="js/controllers.js"></script>
+        <script src="js/changepassword/changepasswordctrl.js"></script>
+        <script src="js/home/homectrl.js"></script>
+        <script src="js/login/loginctrl.js"></script>
+        <script src="js/monthlygoals/monthlygoalsctrl.js"></script>
+        <script src="js/assignment/assignmentctrl.js"></script>
+        <script src="js/territories/territoriesctrl.js"></script>
+        
+        <!--<script src="js/currency.js"></script>-->
+
+        <script src="js/services.js"></script>
+        <script src="js/salesgoals_apiservice.js"></script>
+        <!-- all new services must go under services.js for order of parsing -->     
+        <script>console.log("end of index.html body");</script>
+    </body>
+</html>

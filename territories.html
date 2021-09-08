@@ -1,0 +1,125 @@
+﻿<div class="col">
+    <div class="text-center">
+        <div class="my-1 mx-auto btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary" ng-click="territories.ChangePath('assignment')">
+                <input type="radio" name="options" id="option1" autocomplete="off">Assignment
+            </label>
+            <label class="btn btn-secondary active" ng-click="territories.ChangePath('territories')">
+                <input type="radio" name="options" id="option2" autocomplete="off" checked>Territories
+            </label>
+            <!--<label class="btn btn-secondary">
+<input type="radio" name="options" id="option3" autocomplete="off">States/Provinces
+</label>-->
+        </div>
+        <!--<button type="button" class="btn btn-primary">New Territory</button>-->
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <form class="row justify-content-center">
+                        <div class="col-12 px-5 py-5">
+                            <div class="form-group">
+                                <label for="Name">Name</label>
+                                <input type="text" class="form-control" id="Name" aria-describedby="emailHelp"
+                                    placeholder="Enter name">
+                                <small id="emailHelp" class="form-text text-muted"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="goal">Goal</label>
+                                <input type="number" class="form-control" id="Goal" placeholder="goal">
+                            </div>
+                            <div class="form-group">
+                                <label for="colorpicker">Color</label>
+                                <input type="color" id="Colorpicker" value={{territory.color}} style="width:70%;">
+                            </div>
+
+                            <!--<div class="form-check">
+<input type="checkbox" class="form-check-input" id="exampleCheck1">
+<label class="form-check-label" for="exampleCheck1">Check me out</label>
+</div>-->
+                            <button type="submit" data-dismiss="modal" class="btn btn-primary"
+                                ng-click="territories.AddTerritory()">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container my-4">
+        <div class="row justify-content-end my-1">
+
+            <button class="plus-btn ml-1" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"
+                    aria-hidden="true"></i></button>
+
+
+        </div>
+        <div class="row justify-content-center">
+
+            <div class="col-12 px-0">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Goal</th>
+                            <th class="text-center">Color</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="territory-table-row" ng-repeat="territory in territories.territories">
+                            <td class="territory-table-data text-center" contenteditable="false">{{territory.name}}</td>
+                            <td class="territory-table-data text-center" contenteditable="false">{{territory.goal}}</td>
+                            <td class="territory-table-data text-center">
+                                <input class="territory-table-colorpicker" type="color" id="html5colorpicker"
+                                    value={{territory.color}} style="width:70%;" disabled>
+                            </td>
+                            <td class="text-right" contenteditable="false">
+                                <button class="btn btn-primary mr-3" ng-show="territories.rowBeingEdited == $index"
+                                    ng-click="territories.SaveEdits($index)">Save</button>
+                                <button class="trash-btn" data-toggle="modal" data-target="#ConfirmModal{{$index}}"><i
+                                        class="fa fa-trash"></i></button>
+
+                                <button class="edit-btn ml-3" ng-click="territories.EnableEdit($index)"><i
+                                        class="far fa-edit"></i></button>
+
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="ConfirmModal{{$index}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                    ng-click="territories.RemoveTerritory(territory.seqnum)">Yes</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">No</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

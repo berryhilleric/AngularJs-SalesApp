@@ -1,0 +1,113 @@
+﻿.duallist-btn{
+    background-color:#c7c7c7;
+    border-color: #c7c7c7;
+    border-radius: 5px;
+    color:white;
+}
+
+#duallist-save{
+    background-color:cornflowerblue;
+    border-color:cornflowerblue;
+}
+
+#territory-dropdown-btn{
+    color:white; /*color of the text*/
+}
+
+#year-input{
+    background-color:grey;
+}
+
+.plus-btn{
+    color:white;
+    background-color:green;
+    border-color:green;
+    border-radius: 5px;
+}
+
+.my-dropdown{
+    -webkit-backface-visibility: unset!important;
+    backface-visibility: unset!important;
+}
+
+.cursor:hover {
+  cursor: pointer !important;
+}
+
+/*creates a space above the first window in the dual list to make sure both windows are the same distance from the top*/
+#duallist-dummy-btn{
+    visibility:hidden;
+}
+
+
+.trash-btn {
+    color:white;
+    background-color:darkred;
+    border-color:darkred;
+    border-radius: 5px;
+}
+
+.edit-btn{
+    color:white;
+    background-color:cornflowerblue;
+    border-color:cornflowerblue;
+    border-radius: 5px;
+}
+
+/* Darker background on mouse-over */
+.trash-btn:hover {
+  background-color: RoyalBlue;
+}
+
+.chart-container{
+    position: relative;
+  margin: auto;
+  height: 60vh;
+  width: 100vw;
+}
+
+.red-text{
+    color:red !important;
+}
+
+.green-text {
+  color: green !important;
+}
+
+
+
+
+.middle-spinner {
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 1.5em);
+}
+
+a.standard-btn {
+  width: 150px;
+  color: white !important;
+  border: 1px solid #b5121b;
+  background: #b5121b;
+  /*padding: 12px 26px;*/
+}
+
+  a.standard-btn:hover {
+    background: none;
+    color: #b5121b !important;
+    text-decoration: none;
+  }
+
+  .bold-medium-text{
+    font-size: medium;
+    font-weight: bold;
+  }
+
+  .bold-large-text{
+    font-size: large;
+    font-weight: bold;
+  }
+
+  .bold-larger-text{
+    font-size: larger;
+    font-weight: bold;
+  }
